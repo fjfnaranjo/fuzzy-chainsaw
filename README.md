@@ -30,3 +30,11 @@ export AWS_SECRET_ACCESS_KEY="secret"
 ```
 ./run-terraform.sh apply
 ```
+
+## Other commands
+
+- Getting the IAM credentials for environment variables.
+
+```
+./run-terraform.sh state pull  | grep -A15 aws_iam_access_key
+```
