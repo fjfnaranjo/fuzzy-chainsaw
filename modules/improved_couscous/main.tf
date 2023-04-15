@@ -1,3 +1,8 @@
+provider "aws" {
+  alias  = "euw3"
+  region = "eu-west-3"
+}
+
 resource "aws_iam_user" "ops" {
   name = "improved-couscous-ops"
 }
