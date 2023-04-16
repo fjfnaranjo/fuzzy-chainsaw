@@ -194,8 +194,8 @@ resource "aws_iam_policy" "this" {
   policy      = data.aws_iam_policy_document.this.json
 }
 
-resource "aws_iam_user_policy_attachment" "ops" {
-  user       = aws_iam_user.ops.name
+resource "aws_iam_role_policy_attachment" "ops" {
+  role       = aws_iam_role.this.name
   policy_arn = aws_iam_policy.this.arn
 }
 
