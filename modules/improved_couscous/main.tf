@@ -15,6 +15,16 @@ resource "aws_s3_bucket" "this" {
   bucket   = "improved-couscous"
 }
 
+resource "aws_dynamodb_table" "this" {
+  name           = "ImprovedCouscous"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "Username"
+  attribute {
+    name = "Username"
+    type = "S"
+  }
+}
+
 data "aws_iam_policy_document" "assume_role" {
   statement {
     effect = "Allow"
@@ -183,6 +193,23 @@ data "aws_iam_policy_document" "this" {
        ":",
        data.aws_caller_identity.current.account_id,
        ":log-group:*",
+      ]),
+    ]
+  }
+  statement {
+    effect    = "Allow"
+    actions   = [
+      "dynamodb:GetItem",
+      "dynamodb:PutItem",
+      "dynamodb:UpdateItem",
+    ]
+    resources = [
+      join("", [
+       "arn:aws:dynamodb:",
+       data.aws_region.current.name,
+       ":",
+       data.aws_caller_identity.current.account_id,
+       ":table/ImprovedCouscous",
       ]),
     ]
   }
